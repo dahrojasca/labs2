@@ -4,11 +4,9 @@
 
     <div class="row">
       <button v-on:click="fetch">Consultar cursos</button>
-      
       <router-view></router-view> 
-
     </div>
-
+    <br>
     <table class = "table">
         <thead>
             <tr>
@@ -53,8 +51,10 @@ import Axios from 'axios'
 
     methods: {
         fetch(){
+            let url = "http://localhost:8080/cursosPorId/" + localStorage.getItem('user_id');
+            console.log(url);
             Axios
-            .get("http://localhost:8080/cursosPorId/5")
+            .get(url)
                 .then(res => {
                     this.cursosPorId = res.data;
                      console.log(res.data);

@@ -53,6 +53,23 @@
             }
         },
         methods: {
+          checkIdUser( ){
+      let userPath = '/userfindById/';
+      userPath = userPath + this.username;
+      console.log(userPath);
+      axios
+        .get( this.$store.state.backURL + userPath )
+        .then( response => {
+          if( response.status !== 200 ){
+            alert( "Error en la petición. Intente nuevamente" )
+          }else{
+            localStorage.setItem( 'user_id', response.data );
+            console.log(response.data);
+          }
+        }).catch( response => {
+          alert( "No es posible conectar con el backend en este momento" );
+        });
+    },
             login( event ){
                 axios
                 .post( this.$store.state.backURL + path, // URL
@@ -77,6 +94,7 @@
                     }else{
                         localStorage.setItem( 'token', response.data.access_token );
                         alert( "¡Autenticación Exitosa! El token se ha almacenado en el Local Storage" )
+                        this.checkIdUser();
                     }
                 } ).catch( error => {
                     if( error.response.status === 400 ){
